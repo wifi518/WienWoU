@@ -16,6 +16,27 @@ document.addEventListener( 'deviceready', function() {
       attribution: '© OpenStreetMap'
     } ).addTo( karte );
     karte.setView( [ 48.21, 16.38 ], 12 );
-  
+
+    $.ajax({
+      url:'http://localhost:8125/getstations',
+      method:'post',
+      data:{},
+      success:function(data) {
+        console.info( data );
+        for ( k in data.lines ) {
+          var latlngs = [];
+          for ( i in data.lines[k].stations ) {
+            latlngs.push([
+              data.lines[k].stations[i].lat,
+              data.lines[k].stations[i].lng
+            ]);
+          }
+          var polyline = L.polyline(latlngs, {weight:5, color: data.lines[k].color }).addTo(karte);
+        }
+
+      }
+    })
+
+
   });
 });
