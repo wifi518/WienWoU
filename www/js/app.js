@@ -46,7 +46,7 @@ document.addEventListener( 'deviceready', function() {
       attribution: '© OpenStreetMap'
     } ).addTo( karte );
     karte.setView( [ 48.21, 16.38 ], 12 );
-    return;
+
     var allicons=['U1','U2','U3','U4','U6'];
     var marker = {};
     for ( l in allicons ) {
@@ -56,7 +56,7 @@ document.addEventListener( 'deviceready', function() {
       })
     }
     $.ajax({
-      url:'http://localhost:8125/getstations',
+      url:'http://84.16.242.168:8125/getstations',
       method:'post',
       data:{},
       success:function(data) {

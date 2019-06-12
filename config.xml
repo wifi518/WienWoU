@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget id="at.wifiwien.wienwou" version="0.1.0-b002" xmlns="http://www.w3.org/ns/widget" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="at.wifiwien.wienwou" version="0.1.0-b003" xmlns="http://www.w3.org/ns/widget" xmlns:gap="http://phonegap.com/ns/1.0">
   <name>Wien Wo U</name>
   <description>Wann kommt die nächste U?</description>
   <author email="vincenza@wifi-it.at" href="http://www.wifiwien.at">
