@@ -46,7 +46,7 @@ document.addEventListener( 'deviceready', function() {
       attribution: '© OpenStreetMap'
     } ).addTo( karte );
     karte.setView( [ 48.21, 16.38 ], 12 );
-
+    return;
     var allicons=['U1','U2','U3','U4','U6'];
     var marker = {};
     for ( l in allicons ) {
