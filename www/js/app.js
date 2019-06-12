@@ -7,6 +7,36 @@ console.log = function(s) {
     $( '#debug').html(s).css({padding:10});
 }
 
+var loadWLEchtZeitDaten = function( steige, cb ) {
+  $.ajax({
+  url:'http://www.wienerlinien.at/ogd_realtime/monitor',
+  data:{rbl:steige[0],sender:'LndqkyecPrAmUu5Q'},
+  success:function(res) {
+
+    console.info( res );
+
+      html = 'Abfahrten nach <b>'+res.data.monitors[0].lines[0].towards+'</b> in:<br><div style="font-size:2em;">';
+      for ( c in res.data.monitors[0].lines[0].departures.departure ) {
+        html+= res.data.monitors[0].lines[0].departures.departure[c].departureTime.countdown +'min '
+      }
+      html+='</div>'
+      $.ajax({
+      url:'http://www.wienerlinien.at/ogd_realtime/monitor',
+      data:{rbl:steige[1],sender:'LndqkyecPrAmUu5Q'},
+      success:function(res) {
+
+        html += '<hr>Abfahrten nach <b>'+res.data.monitors[0].lines[0].towards+'</b> in:<br><div style="font-size:2em;">';
+        for ( c in res.data.monitors[0].lines[0].departures.departure ) {
+          html+= res.data.monitors[0].lines[0].departures.departure[c].departureTime.countdown +'min '
+        }
+        html += '</div>';
+          cb(html);
+      }});
+
+  }
+})
+}
+
 document.addEventListener( 'deviceready', function() {
   $( document ).ready( function() {
     console.log( 'DOM ready, alles ready...' );
@@ -40,6 +70,14 @@ document.addEventListener( 'deviceready', function() {
             ]);
             var m = L.marker(latlngs[latlngs.length-1],{icon:marker[data.lines[k].name]}).addTo(karte);
             m.bindPopup( data.lines[k].stations[i].name )
+            m.steige = data.lines[k].stations[i].steige;
+            m.on('click', function(e) {
+                 var popup = e.target.getPopup();
+                loadWLEchtZeitDaten( this.steige, function( html ) {
+                  popup.setContent(html);
+                  popup.update();
+                });
+            })
 
           }
           var polyline = L.polyline(latlngs, {weight:5, color: data.lines[k].color }).addTo(karte);
