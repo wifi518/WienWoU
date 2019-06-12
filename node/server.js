@@ -73,13 +73,20 @@ var saveJSON = function() {
     var j = linienId[ steige[i][1] ];
     //console.log( 's'+steige[1] );
     if ( typeof j == 'number' ) {
-        if ( data.lines[j].stations.indexOf( steige[i][2]) == -1 ) {
-          data.lines[j].stations.push(steige[i][2]);
+
+        var station = -1;
+        for ( k in data.lines[j].stations ) {
+          if ( data.lines[j].stations[k].HID == steige[i][2] ) {
+            station = k;
+          }
+        }
+        if ( station == -1 ) {
+          data.lines[j].stations.push({HID:steige[i][2],S:[steige[i][5]]});
+        } else {
+          data.lines[j].stations[station].S.push(steige[i][5]);
         }
     }
   }
-
-
 
   var hs = [];
   for ( i in haltestellen ) {
@@ -95,11 +102,12 @@ var saveJSON = function() {
 
   for (i in data.lines ) {
     for (j in data.lines[i].stations ) {
-      var k = data.lines[i].stations[j];
+      var k = data.lines[i].stations[j].HID;
       data.lines[i].stations[j] = {
         name: hs[k][0],
         lat:hs[k][1],
-        lng:hs[k][2]
+        lng:hs[k][2],
+        steige:data.lines[i].stations[j].S
       }
     }
   }

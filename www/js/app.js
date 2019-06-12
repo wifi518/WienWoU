@@ -38,5 +38,14 @@ document.addEventListener( 'deviceready', function() {
     })
 
 
+      $.ajax({
+        url:'http://www.wienerlinien.at/ogd_realtime/monitor',
+        data:{rbl:4252,sender:'LndqkyecPrAmUu5Q'},
+        success:function(res) {
+          console.log( res );
+        }
+      });
+
+
   });
 });
