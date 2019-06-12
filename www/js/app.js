@@ -17,6 +17,14 @@ document.addEventListener( 'deviceready', function() {
     } ).addTo( karte );
     karte.setView( [ 48.21, 16.38 ], 12 );
 
+    var allicons=['U1','U2','U3','U4','U6'];
+    var marker = {};
+    for ( l in allicons ) {
+      marker[ allicons[l] ] = L.icon({
+        iconUrl:'assets/Wien_'+allicons[l]+'.svg.png',
+        iconSize:[20,20]
+      })
+    }
     $.ajax({
       url:'http://localhost:8125/getstations',
       method:'post',
@@ -30,6 +38,9 @@ document.addEventListener( 'deviceready', function() {
               data.lines[k].stations[i].lat,
               data.lines[k].stations[i].lng
             ]);
+            var m = L.marker(latlngs[latlngs.length-1],{icon:marker[data.lines[k].name]}).addTo(karte);
+            m.bindPopup( data.lines[k].stations[i].name )
+
           }
           var polyline = L.polyline(latlngs, {weight:5, color: data.lines[k].color }).addTo(karte);
         }
