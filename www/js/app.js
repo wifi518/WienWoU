@@ -10,7 +10,7 @@ console.log = function(s) {
 var loadWLEchtZeitDaten = function( steige, cb ) {
   $.ajax({
   url:'http://www.wienerlinien.at/ogd_realtime/monitor',
-  data:{rbl:steige[0],sender:'LndqkyecPrAmUu5Q'},
+  data:{rbl:steige[0],sender:''},
   success:function(res) {
 
     console.info( res );
@@ -22,7 +22,7 @@ var loadWLEchtZeitDaten = function( steige, cb ) {
       html+='</div>'
       $.ajax({
       url:'http://www.wienerlinien.at/ogd_realtime/monitor',
-      data:{rbl:steige[1],sender:'LndqkyecPrAmUu5Q'},
+      data:{rbl:steige[1],sender:''},
       success:function(res) {
 
         html += '<hr>Abfahrten nach <b>'+res.data.monitors[0].lines[0].towards+'</b> in:<br><div style="font-size:2em;">';
